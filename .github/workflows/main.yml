@@ -1,0 +1,16 @@
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pull image
+        run: |
+          docker pull ghcr.io/huaqiu-electronics/ecad-viewer:full
+      - name: Save tar
+        run: |
+          docker save ghcr.io/huaqiu-electronics/ecad-viewer:full \
+            | gzip -c > ecad-viewer_full.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ecad-viewer-offline
+          path: ecad-viewer_full.tar.gz
