@@ -16,13 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4            # 拉取仓库代码，上传 Artifact 时需要
 
-      # 如镜像是私有的，先登录 GHCR（需要设置 GHCR_PAT 机密）
-      - name: Log in to GHCR
-        if: ${{ secrets.GHCR_PAT != '' }}    # 公共镜像可删掉这一步
-        run: |
-          echo "${{ secrets.GHCR_PAT }}" | \
-            docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
       - name: Pull image
         run: |
           docker pull ghcr.io/huaqiu-electronics/ecad-viewer:full
